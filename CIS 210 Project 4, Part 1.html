@@ -1,0 +1,217 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<!-- saved from url=(0068)https://classes.cs.uoregon.edu/16F/cis210/assignments/W4-Jumbler.php -->
+<html class="gr__classes_cs_uoregon_edu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- This is for the <head> section of CIS210 pages,
+     not for the page header in the <body> section. 
+   Include here metadata including css links, etc., 
+   but omit the <title> element which may be specific
+   to each page. 
+   Set $root before calling this.
+-->
+
+
+<meta name="description" content="CIS 210, Computer Science 1">
+<meta name="keywords" content="Computer science, CS1"> 
+<meta name="author" content="Michal Young"> 
+
+   <link rel="stylesheet" type="text/css" href="./CIS 210 Project 4, Part 1_files/cis210.css" media="screen">
+   <link rel="stylesheet" type="text/css" href="./CIS 210 Project 4, Part 1_files/cis210-print.css" media="print">
+
+<title>CIS 210 Project 4, Part 1</title></head>
+
+<body data-gr-c-s-loaded="true">
+<div class="container">
+
+  <!-- pagehead.php: Page header to include on each page -->
+
+<div class="pageheader">
+   <div class="title">
+   <h1>CIS 210, Fall 2016<br> Introduction to Computer Science</h1>
+   </div> <!-- title -->
+   </div> <!-- pageheader -->
+<!-- end pagehead.php -->
+  <!-- sidebar.php:  Sidebar to be replicated on each page 
+     Note links must be relative to site URL-->
+<div class="sidenav">
+   <h1>Main Menu</h1>
+   <ul>
+   <li><a href="https://classes.cs.uoregon.edu/16F/cis210/index.php">Class home page</a></li>
+   <li><a href="https://piazza.com/uoregon/fall2016/cis210/home">Piazza</a></li>
+   <li><a href="https://classes.cs.uoregon.edu/16F/cis210/hints.php">How to Succeed</a></li>
+   <li><a href="https://classes.cs.uoregon.edu/16F/cis210/schedule.php">Schedule</a></li>
+   <li><a href="https://classes.cs.uoregon.edu/16F/cis210/assignments.php">Assignments</a></li>
+   <li><a href="https://classes.cs.uoregon.edu/16F/cis210/references.php">References</a></li>
+  <li><a href="https://classes.cs.uoregon.edu/16F/cis210/exams.php">Exams</a></li>
+<!--
+  <li><a href="/16F/cis210/assignments/Contest.php" >Contest</a></li>
+-->
+   </ul>
+</div>
+
+<div class="content">
+
+<div class="item">
+  <h1>Project 4, Part 1</h1>
+<p>This assignment is due Friday, October 21 at 5pm. Save your Python program
+  in a file called jumbler.py and turn that file in using Canvas.</p>
+<h1>Purpose</h1>
+  <p>A common programming task is to scan a file, picking out elements that
+     meet some criterion.
+     This assignment introduces the file-scan idiom in Python, along with some
+     basic manipulation of strings (text).
+</p>
+</div>
+
+
+<div class="item">
+<h1>Word Jumbles (Anagrams)</h1>
+
+  <p>
+    Anagrams are words whose letters have been scrambled.
+    In newspapers and online, "word jumble" puzzles are based on anagrams,
+    and can be solved using the program you will write.
+    (For example, you should be able to solve the anagrams at
+    <a href="http://www.jumble.com/games/info/13">the daily jumble</a>.
+  </p>
+</div>
+<div class="item">
+  <h2>Requirements</h2>
+  <p>
+    Your program will read two strings from the command line.
+    The first is a scrambled word (e.g., "hinttree").
+    The second is the name of a file containing a list of words,
+    which will serve as a dictionary.
+    Your program will check the scrambled word against every word in the
+    dictionary.
+    If the scrambled word can be rearranged to match a dictionary word,
+    the dictionary word will be printed.
+    After scanning the whole word list, the program prints the number of
+    matches and the number of words in the list.  For example:
+  </p>
+  <code>
+  $ python3 jumbler.py trsesi dict.txt
+  resist
+  sister
+  2 matches in 41238 words
+  $ python3 jumbler.py rayin dict.txt
+  rainy
+  1 match in 41238 words
+  $ python3 jumbler.py tororo dict.txt
+  No matches
+  $ python3 jumbler.py taroro dict.txt
+  orator
+  1 match in 41238 words
+  $
+  </code>
+  <p>
+    Note that 41238 is the number of words found in that particular dictionary.
+    We could also run the program with a shorter or longer dictionary
+    (by typing a different file name in place of dict.txt),
+    and would see a different word count.
+  </p>
+  <code>
+  $ python3 jumbler.py phaal shortdict.txt
+  alpha
+  1 match in 5 words
+  </code>
+</div>
+<div class="item">
+  <h1>Notes and hints on the jumble solver</h1>
+  <p>
+    Please name your program file <tt>jumbler.py</tt>.
+  </p>
+  <p>
+    I've provided some starter code in <a href="https://classes.cs.uoregon.edu/16F/cis210/assignments/base/jumbler.py">jumbler.py</a>.
+    Note there are several parts you need to change. Some are flagged with
+    FIXME, some are not.
+  </p>
+</div>
+<div class="item">
+  <h2>How to check</h2>
+  <p>
+    There is a simple trick for matching anagrams in a word list - we sort
+    the letters in the anagram (e.g., "trscsi" becomes "cirsst"),
+    and we also sort the letters in each dictionary word before checking.
+    Then, we can simply check to see if they match exactly.
+  </p>
+  <p>
+    Note: when python reads a line of text from a file, the line includes
+    the ending carriage return and/or newline character.
+    That's why we strip "white space" off the ends of each entry in the
+    dictionary file this way:
+  </p>
+  <code>
+  word = word.strip()  # Remove spaces or carriage return at ends
+  </code>
+  <p>
+    Python has a built-in function called <tt>sorted</tt> which puts any
+    sequence into sorted order.
+    A string in Python is an immutable sequence, so you can use the
+    <tt>sorted</tt> function to get the letters in a word in alphabetical
+    order.
+    The <tt>sorted</tt> function always returns a <em>list</em>, so for
+    example <tt>sorted("resist")</tt> will return
+    <tt>["e", "i", "r", "s", "s", "t"]</tt>.
+    Since we can check equality between lists, this feature of <tt>sorted</tt>
+    works fine.
+    For example, if we check <tt>sorted("abc") == sorted("cba")</tt>,
+    we will be comparing <tt>["a", "b", "c"]</tt> to <tt>["a", "b", "c"]</tt>,
+    and the result will be <tt>True</tt>.
+  </p>
+    You'll need a good word list to test your program.
+    <a href="https://classes.cs.uoregon.edu/16F/cis210/assignments/base/dict.txt">dict.txt</a> will work.
+    Put it into the same directory as your program for easy testing.
+    Don't turn it in with your program.
+  <p>
+  </p>
+    You can find lots of test cases by searching for jumble or word jumble
+    on the web.
+  <p>
+  </p>
+</div>
+<div class="item">
+<h1>Grading</h1>
+<p>35 points possible</p>
+  <ul>
+    <li>15: Program runs and consistently produces correct
+    output for any scrambled word and any dictionary.  5 point penalty for
+    any of the following:</li>
+    <ul>
+      <li>Test cases running in addition to program functionality. (You need
+          to comment out the call to run_tests for your final testing and
+          submission.)</li>
+      <li>Incorrect or missing counts of matches or items in the word list.</li>
+      <li>Other extra output, missing output, or output formatted differently
+          than the examples above.</li>
+    </ul>
+    <li>10: Follows <a href="https://classes.cs.uoregon.edu/16F/cis210/handouts/styleguide.php">CIS 210 coding
+        guidelines</a>, including author identification and header.</li>
+    <li>10: Clarity. The program shouldnot only be consistent with the
+        requirements and approach described here, but it should be very easy
+        to read the program and verify its consistency with the spec.</li>
+   </ul>
+</div>
+
+
+
+</div> <!-- class content -->
+
+<!-- pagefoot.php: Page footing to include on each page -->
+<div class="clearer">  </div>
+   <div class="footer">
+
+   <span style="float: left">
+   Contact <a href="mailto:jsventek@uoregon.edu?subject=CIS%20210%20web%20site">webmaster</a>.
+   </span>
+   <span style="float: right">  Based loosely on Transparentia design by Arcsin, from OSWD.org. </span>
+      &nbsp; <!-- Space to put the two floats above.  Setting text justification does not seem to do it. -->
+   </div>
+<!-- Track our traffic ?? -->
+<!-- End pagefoot.php -->
+
+</div> <!-- class container -->
+
+
+
+
+</body><span class="gr__tooltip"><span class="gr__tooltip-content"></span><i class="gr__tooltip-logo"></i><span class="gr__triangle"></span></span></html>
